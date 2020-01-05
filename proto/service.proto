@@ -1,0 +1,20 @@
+syntax = "proto3";
+package user.proto;
+option go_package = "code.aliyun.com/microstack/rpc-user/proto";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+import "proto/message.proto";
+
+service User {
+    // 注册用户
+    rpc RegisterUser (RegisterUserReq) returns (RegisterUserRsp);
+    // 密码登录
+    rpc LoginPwd (LoginPwdReq) returns (LoginRsp);
+    // 手机登录
+    rpc LoginPhone (LoginPhoneReq) returns (LoginRsp);
+    // 注销登录
+    rpc Logout (google.protobuf.Empty) returns (google.protobuf.BoolValue);
+    // 验证登录
+    rpc Auth (AuthReq) returns (google.protobuf.BoolValue);
+}

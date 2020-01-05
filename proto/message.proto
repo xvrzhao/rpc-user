@@ -1,0 +1,38 @@
+syntax = "proto3";
+package user.proto;
+option go_package = "code.aliyun.com/microstack/rpc-user/proto";
+
+import "google/protobuf/wrappers.proto";
+
+message RegisterUserReq {
+    string UserName = 1;
+    string NickName = 2;
+    string Phone = 3;
+    string Code = 4;
+    string Password = 5;
+}
+
+message RegisterUserRsp {
+    google.protobuf.BoolValue Status = 1;
+    int64 UserID = 2;
+}
+
+message LoginPwdReq {
+    string UserName = 1;
+    string Password = 2;
+}
+
+message LoginPhoneReq {
+    string Phone = 1;
+    string Code = 2;
+}
+
+message LoginRsp {
+    google.protobuf.BoolValue Status = 1;
+    string Token = 2;
+}
+
+message AuthReq {
+    int64 UserID = 1;
+    string Value = 2;
+}
