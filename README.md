@@ -1,6 +1,6 @@
-# 用户 RPC 服务
+# User RPC Service
 
-提供用户相关远程调用方法。
+A gRPC service provides user-related methods.
 
 ## 运行方式
 

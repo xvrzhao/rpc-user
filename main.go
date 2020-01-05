@@ -1,10 +1,10 @@
 package main
 
 import (
-	"code.aliyun.com/microstack/rpc-user/db"
-	pb "code.aliyun.com/microstack/rpc-user/proto"
-	"code.aliyun.com/microstack/rpc-user/server"
 	"fmt"
+	"github.com/micro-stacks/rpc-user/db"
+	pb "github.com/micro-stacks/rpc-user/proto"
+	"github.com/micro-stacks/rpc-user/server"
 	"google.golang.org/grpc"
 	"log"
 	"net"

@@ -1,10 +1,10 @@
 package db
 
 import (
-	"code.aliyun.com/microstack/rpc-user/db/models"
-	myGorm "code.aliyun.com/microstack/utils/db/gorm"
 	"errors"
 	"github.com/jinzhu/gorm"
+	"github.com/micro-stacks/rpc-user/db/models"
+	myGorm "github.com/micro-stacks/utils/db/gorm"
 	"log"
 	"os"
 )

@@ -1,10 +1,10 @@
 package server
 
 import (
-	"code.aliyun.com/microstack/rpc-user/proto"
 	"context"
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/golang/protobuf/ptypes/wrappers"
+	"github.com/micro-stacks/rpc-user/proto"
 )
 
 func (*UserServer) LoginPwd(context.Context, *proto.LoginPwdReq) (*proto.LoginRsp, error) {

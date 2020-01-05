@@ -1,6 +1,6 @@
 syntax = "proto3";
 package user.proto;
-option go_package = "code.aliyun.com/microstack/rpc-user/proto";
+option go_package = "github.com/micro-stacks/rpc-user/proto";
 
 import "google/protobuf/wrappers.proto";
 
