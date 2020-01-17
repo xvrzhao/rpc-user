@@ -14,7 +14,8 @@ message RegisterUserReq {
 
 message RegisterUserRsp {
     google.protobuf.BoolValue Status = 1;
-    int64 UserID = 2;
+    string Msg = 2;
+    int64 UserID = 3;
 }
 
 message LoginPwdReq {
@@ -29,10 +30,21 @@ message LoginPhoneReq {
 
 message LoginRsp {
     google.protobuf.BoolValue Status = 1;
-    string Token = 2;
+    string Msg = 2;
+    string Token = 3;
 }
 
 message AuthReq {
     int64 UserID = 1;
     string Value = 2;
+}
+
+message SendMobileCodeReq {
+    string MobileNumber = 1;
+    string IP = 2;
+}
+
+message SendMobileCodeRsp {
+    google.protobuf.BoolValue Status = 1;
+    string Msg = 2;
 }

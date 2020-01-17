@@ -1,7 +1,7 @@
 #!/bin/bash
 # 导入环境变量
 
-if [[ ! -f "../.env" ]]; then
+if [ ! -f "../.env" ]; then
   echo "error: no .env file"
   exit
 fi

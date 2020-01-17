@@ -1,9 +1,11 @@
 #!/bin/bash
-# 启动应用
+# 运行所有单元测试
 
 project="rpc-user"
 
 cd $(dirname $0)
 source env.sh
+export RUN_MODE=pro
 
-# todo
+cd ..
+go test -v -race -count=1 ./...

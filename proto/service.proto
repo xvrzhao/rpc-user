@@ -11,6 +11,8 @@ service User {
     rpc RegisterUser (RegisterUserReq) returns (RegisterUserRsp);
     // 密码登录
     rpc LoginPwd (LoginPwdReq) returns (LoginRsp);
+    // 发送手机验证码
+    rpc SendMobileCode (SendMobileCodeReq) returns (SendMobileCodeRsp);
     // 手机登录
     rpc LoginPhone (LoginPhoneReq) returns (LoginRsp);
     // 注销登录

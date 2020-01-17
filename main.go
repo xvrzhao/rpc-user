@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/micro-stacks/rpc-user/db"
+	"github.com/micro-stacks/rpc-user/db/models"
 	pb "github.com/micro-stacks/rpc-user/proto"
 	"github.com/micro-stacks/rpc-user/server"
 	"google.golang.org/grpc"
@@ -11,7 +11,7 @@ import (
 )
 
 func migrate() {
-	err := db.Migrate()
+	err := models.Migrate()
 	if err != nil {
 		log.Fatalf("failed to migrate db: %v", err)
 	}
@@ -34,6 +34,9 @@ func serve() {
 }
 
 func main() {
-	migrate()
 	serve()
+}
+
+func init() {
+	migrate()
 }
