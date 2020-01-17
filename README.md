@@ -1,6 +1,25 @@
-# 用户 RPC 服务
+# micro-stacks/rpc-user
 
-使用 gRPC 构建的用户相关的 RPC 服务。
+[![Build Status](https://travis-ci.com/micro-stacks/rpc-user.svg?branch=master)](https://travis-ci.com/micro-stacks/rpc-user)
+
+通用的用户 gRPC 服务，用于二次开发。
+
+## 项目架构
+
+- cache *缓存客户端*
+- cmd *命令脚本*
+- db *数据库客户端*
+    - migrations *迁移记录*
+    - models *表模型*
+- proto *RPC 方法定义*
+- server *RPC 方法实现*
+- main.go *编译入口*
+
+## 安装方式
+
+1. `git clone` 代码到本地
+2. 根据 `.env.example` 文件设置环境变量文件 `.env`
+3. 根据环境变量中的 `DB_NAME` 建立一个数据库，首次运行会自动执行数据表迁移，之后的数据库结果变动请遵循下文 *开发规范-数据库迁移* 一节
 
 ## 运行方式
 
@@ -8,10 +27,13 @@
 - cmd/test.sh 执行测试
 - cmd/proto.sh 重新生成 protobuf Go 代码
 
-## 环境依赖
+## 环境依赖 / 技术栈
 
 - .env 环境变量文件，参见 .env.example 文件
-- MySQL
+- MySQL（jinzhu/gorm）
+- Redis（go-redis/redis/v7）
+- gRPC
+- Protocol Buffers
 
 ## 开发规范
 
