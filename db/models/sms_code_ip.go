@@ -18,37 +18,39 @@ type SmsCodeIP struct {
 // IpAddOne 添加当天的 ip 的请求发送次数
 func (m SmsCodeIP) IpAddOne(ip string) error {
 	err := db.Client.Where("ip = ? and created_at > ?", ip, time.Now().Format("2006-01-02")).First(&m).Error
-	if err != nil {
-		if gorm.IsRecordNotFoundError(err) {
-			m.IP = ip
-			m.Num = 1
-			err = db.Client.Create(&m).Error
+	if err == gorm.ErrRecordNotFound {
+		m.IP = ip
+		m.Num = 1
+		if err = db.Client.Create(&m).Error; err != nil {
+			return err
 		}
-		return err
-	} else {
-		m.Num++
-		return db.Client.Save(&m).Error
+		return nil
 	}
+	if err != nil {
+		return err
+	}
+	m.Num++
+	return db.Client.Save(&m).Error
 }
 
 // CheckIP 检查 IP 是否超过请求发送限制。
 func (m SmsCodeIP) CheckIP(ip string) (valid bool, err error) {
 	err = db.Client.Where("ip = ? and created_at > ?", ip, time.Now().Format("2006-01-02")).First(&m).Error
-	if err != nil {
-		if gorm.IsRecordNotFoundError(err) {
-			valid = true
-			err = nil
-			return
-		}
-	} else {
-		max, err := strconv.Atoi(os.Getenv("SMS_CODE_MAX_REQ_PER_IP"))
-		if err != nil {
-			return false, err
-		}
-		if m.Num > int64(max) {
-			return false, nil
-		}
+	if err == gorm.ErrRecordNotFound {
 		valid = true
+		err = nil
+		return
 	}
+	if err != nil {
+		return
+	}
+	max, err := strconv.Atoi(os.Getenv("SMS_CODE_MAX_REQ_PER_IP"))
+	if err != nil {
+		return
+	}
+	if m.Num > int64(max) {
+		return
+	}
+	valid = true
 	return
 }

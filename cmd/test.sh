@@ -5,7 +5,7 @@ project="rpc-user"
 
 cd $(dirname $0)
 source env.sh
-export RUN_MODE=pro
+export RUN_MODE=test
 
 cd ..
 go test -v -race -count=1 ./...
