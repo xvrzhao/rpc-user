@@ -1,0 +1,27 @@
+language: go
+go:
+  - 1.13.x
+os:
+  - linux
+git:
+  depth: 10
+services:
+  - mysql
+  - redis
+before_install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS rpc_user_test;'
+env:
+  global:
+    - RUN_MODE=test
+    - DB_HOST=127.0.0.1
+    - DB_PORT=3306
+    - DB_NAME=rpc_user_test
+    - DB_USER=root
+    - DB_PASSWORD=
+    - REDIS_HOST=127.0.0.1
+    - REDIS_PORT=6379
+    - REDIS_PASSWORD=
+    - REDIS_DB=0
+    - SMS_CODE_MAX_REQ_PER_IP=15
+    - SMS_CODE_MOBILE_RECV_MINUTE=1
+script: go test -v -race -count=1 ./...

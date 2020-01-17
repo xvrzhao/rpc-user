@@ -6,6 +6,7 @@
 
 - cmd/startup.sh 启动应用
 - cmd/test.sh 执行测试
+- cmd/proto.sh 重新生成 protobuf Go 代码
 
 ## 环境依赖
 
