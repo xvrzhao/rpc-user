@@ -7,16 +7,16 @@ import "google/protobuf/wrappers.proto";
 import "proto/message.proto";
 
 service User {
-    // 注册用户
-    rpc RegisterUser (RegisterUserReq) returns (RegisterUserRsp);
-    // 密码登录
-    rpc LoginPwd (LoginPwdReq) returns (LoginRsp);
-    // 发送手机验证码
-    rpc SendMobileCode (SendMobileCodeReq) returns (SendMobileCodeRsp);
-    // 手机登录
-    rpc LoginPhone (LoginPhoneReq) returns (LoginRsp);
-    // 注销登录
-    rpc Logout (google.protobuf.Empty) returns (google.protobuf.BoolValue);
-    // 验证登录
-    rpc Auth (AuthReq) returns (google.protobuf.BoolValue);
+  // 注册用户
+  rpc RegisterUser (RegisterUserReq) returns (RegisterUserRsp);
+  // 密码登录
+  rpc LoginPwd (LoginPwdReq) returns (LoginRsp);
+  // 发送手机验证码
+  rpc SendMobileCode (SendMobileCodeReq) returns (SendMobileCodeRsp);
+  // 手机登录
+  rpc LoginPhone (LoginPhoneReq) returns (LoginRsp);
+  // 注销登录
+  rpc Logout (google.protobuf.Empty) returns (google.protobuf.BoolValue);
+  // 验证登录
+  rpc Auth (AuthReq) returns (google.protobuf.BoolValue);
 }

@@ -5,7 +5,6 @@ import (
 	"github.com/micro-stacks/rpc-user/cache"
 	"github.com/micro-stacks/rpc-user/db/models"
 	"github.com/micro-stacks/rpc-user/proto"
-	"github.com/micro-stacks/utils/protobuf"
 	"github.com/micro-stacks/utils/strings"
 )
 
@@ -23,7 +22,7 @@ func (server *UserServer) SendMobileCode(ctx context.Context, req *proto.SendMob
 	}
 	rsp = new(proto.SendMobileCodeRsp)
 	if valid == false {
-		rsp.Status = protobuf.FalseValue()
+		rsp.Status = false
 		rsp.Msg = "IP 超过发送限制"
 		return
 	}
@@ -33,24 +32,24 @@ func (server *UserServer) SendMobileCode(ctx context.Context, req *proto.SendMob
 		return
 	}
 	if valid == false {
-		rsp.Status = protobuf.FalseValue()
+		rsp.Status = false
 		rsp.Msg = "手机号请求验证码过于频繁"
 		return
 	}
 	// 发送验证码
 	code := strings.RandNum(6)
 	if err = sendMsg(req.GetMobileNumber(), code); err != nil {
-		rsp.Status = protobuf.FalseValue()
+		rsp.Status = false
 		rsp.Msg = "验证码发送失败"
 		return
 	}
 	// 将验证码放入缓存
 	if err = cache.StoreMobileCode(req.GetMobileNumber(), code); err != nil {
-		rsp.Status = protobuf.FalseValue()
+		rsp.Status = false
 		rsp.Msg = "验证码已发送，但加入缓存失败"
 		return
 	}
-	rsp.Status = protobuf.TrueValue()
+	rsp.Status = true
 	rsp.Msg = "发送成功"
 	return
 }

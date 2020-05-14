@@ -1,5 +1,5 @@
 #!/bin/bash
-# 运行所有单元测试
+# 运行单元测试，等同于 go test 命令
 
 project="rpc-user"
 
@@ -8,4 +8,4 @@ source env.sh
 export RUN_MODE=test
 
 cd ..
-go test -v -race -count=1 ./...
+go test $@

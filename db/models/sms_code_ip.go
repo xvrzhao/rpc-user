@@ -3,33 +3,30 @@ package models
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/micro-stacks/rpc-user/db"
+	g "github.com/micro-stacks/utils/db/gorm"
 	"os"
 	"strconv"
 	"time"
 )
 
-// SmsIP 对应 sms_code_ips 表，表示某个 IP 在当天请求发送短信验证码的次数。
+// SmsCodeIP 对应 sms_code_ips 表，表示某个 IP 在当天请求发送短信验证码的次数。
 type SmsCodeIP struct {
-	gorm.Model
+	g.Model
 	IP  string `gorm:"type:varchar(100);not null;index;comment:'请求发送验证码的 IP'"`
 	Num int64  `gorm:"type:int;not null;default:1;comment:'请求发送验证码的次数'"`
 }
 
 // IpAddOne 添加当天的 ip 的请求发送次数
 func (m SmsCodeIP) IpAddOne(ip string) error {
-	err := db.Client.Where("ip = ? and created_at > ?", ip, time.Now().Format("2006-01-02")).First(&m).Error
-	if err == gorm.ErrRecordNotFound {
-		m.IP = ip
-		m.Num = 1
-		if err = db.Client.Create(&m).Error; err != nil {
-			return err
-		}
-		return nil
-	}
-	if err != nil {
+	if err := db.Client.Where("ip = ? and created_at > ?", ip, time.Now().Format("2006-01-02")).First(&m).Error; err != nil && err != gorm.ErrRecordNotFound {
 		return err
 	}
-	m.Num++
+	if m.ID == 0 {
+		m.IP = ip
+		m.Num = 1
+	} else {
+		m.Num++
+	}
 	return db.Client.Save(&m).Error
 }
 

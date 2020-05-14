@@ -1,14 +1,14 @@
 package models
 
 import (
-	"github.com/jinzhu/gorm"
 	"github.com/micro-stacks/rpc-user/db"
+	g "github.com/micro-stacks/utils/db/gorm"
 	pwd "github.com/micro-stacks/utils/password"
 )
 
 // User 对应用户表 users。
 type User struct {
-	gorm.Model
+	g.Model
 	Username string `gorm:"type:varchar(50);not null;unique_index;comment:'用户名'"`
 	Nickname string `gorm:"type:varchar(50);not null;comment:'用户昵称'"`
 	Gender   uint8  `gorm:"type:tinyint;default:0;comment:'性别（0 未知 1 男 2 女）'"`
@@ -60,3 +60,5 @@ func (m User) Register(username, nickname, phone, password string) (userID int64
 	userID = int64(m.ID)
 	return
 }
+
+//func (m User) CheckUserPwd

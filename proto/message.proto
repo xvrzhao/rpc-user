@@ -5,46 +5,46 @@ option go_package = "github.com/micro-stacks/rpc-user/proto";
 import "google/protobuf/wrappers.proto";
 
 message RegisterUserReq {
-    string UserName = 1;
-    string NickName = 2;
-    string Phone = 3;
-    string Code = 4;
-    string Password = 5;
+  string UserName = 1;
+  string NickName = 2;
+  string Phone = 3;
+  string Code = 4;
+  string Password = 5;
 }
 
 message RegisterUserRsp {
-    google.protobuf.BoolValue Status = 1;
-    string Msg = 2;
-    int64 UserID = 3;
+  google.protobuf.BoolValue Status = 1;
+  string Msg = 2;
+  int64 UserID = 3;
 }
 
 message LoginPwdReq {
-    string UserName = 1;
-    string Password = 2;
+  string UserName = 1;
+  string Password = 2;
 }
 
 message LoginPhoneReq {
-    string Phone = 1;
-    string Code = 2;
+  string Phone = 1;
+  string Code = 2;
 }
 
 message LoginRsp {
-    google.protobuf.BoolValue Status = 1;
-    string Msg = 2;
-    string Token = 3;
+  google.protobuf.BoolValue Status = 1;
+  string Msg = 2;
+  string Token = 3;
 }
 
 message AuthReq {
-    int64 UserID = 1;
-    string Value = 2;
+  int64 UserID = 1;
+  string Value = 2;
 }
 
 message SendMobileCodeReq {
-    string MobileNumber = 1;
-    string IP = 2;
+  string MobileNumber = 1;
+  string IP = 2;
 }
 
 message SendMobileCodeRsp {
-    google.protobuf.BoolValue Status = 1;
-    string Msg = 2;
+  bool Status = 1;
+  string Msg = 2;
 }
