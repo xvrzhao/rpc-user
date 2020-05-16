@@ -5,17 +5,12 @@ import (
 	"github.com/micro-stacks/rpc-user/cache"
 	"github.com/micro-stacks/rpc-user/db/models"
 	"github.com/micro-stacks/rpc-user/proto"
-	"github.com/micro-stacks/utils/protobuf"
 )
 
 func (*UserServer) RegisterUser(ctx context.Context, req *proto.RegisterUserReq) (rsp *proto.RegisterUserRsp, err error) {
 	rsp = new(proto.RegisterUserRsp)
-	if req.GetUserName() == "" ||
-		req.GetNickName() == "" ||
-		req.GetPassword() == "" ||
-		req.GetPhone() == "" ||
-		req.GetCode() == "" {
-		rsp.Status = protobuf.FalseValue()
+	if req.GetUserName() == "" || req.GetNickName() == "" || req.GetPassword() == "" || req.GetPhone() == "" || req.GetCode() == "" {
+		rsp.Status = false
 		rsp.Msg = "存在空值"
 		return
 	}
@@ -25,7 +20,7 @@ func (*UserServer) RegisterUser(ctx context.Context, req *proto.RegisterUserReq)
 		return
 	}
 	if valid == false {
-		rsp.Status = protobuf.FalseValue()
+		rsp.Status = false
 		rsp.Msg = "验证码错误"
 		return
 	}
@@ -36,7 +31,7 @@ func (*UserServer) RegisterUser(ctx context.Context, req *proto.RegisterUserReq)
 		return
 	}
 	if has == true {
-		rsp.Status = protobuf.FalseValue()
+		rsp.Status = false
 		rsp.Msg = "用户名已被注册"
 		return
 	}
@@ -46,7 +41,7 @@ func (*UserServer) RegisterUser(ctx context.Context, req *proto.RegisterUserReq)
 		return
 	}
 	if has == true {
-		rsp.Status = protobuf.FalseValue()
+		rsp.Status = false
 		rsp.Msg = "该手机号已被其他账号绑定"
 		return
 	}
@@ -55,7 +50,7 @@ func (*UserServer) RegisterUser(ctx context.Context, req *proto.RegisterUserReq)
 	if err != nil {
 		return
 	}
-	rsp.Status = protobuf.TrueValue()
+	rsp.Status = true
 	rsp.UserID = uid
 	rsp.Msg = "注册成功"
 	return

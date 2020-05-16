@@ -38,10 +38,11 @@ func StoreMobileCode(mobile, code string) (err error) {
 // VerifyMobileCode 检测手机和验证码是否匹配。
 func VerifyMobileCode(mobile, code string) (valid bool, err error) {
 	res, err := Client.Get(mobileCodeKey(mobile)).Result()
+	if err == redis.Nil {
+		err = nil
+		return
+	}
 	if err != nil {
-		if err == redis.Nil {
-			err = nil
-		}
 		return
 	}
 	if res == code {

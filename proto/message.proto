@@ -13,7 +13,7 @@ message RegisterUserReq {
 }
 
 message RegisterUserRsp {
-  google.protobuf.BoolValue Status = 1;
+  bool Status = 1;
   string Msg = 2;
   int64 UserID = 3;
 }
