@@ -8,35 +8,36 @@ import (
 	"google.golang.org/grpc"
 	"log"
 	"net"
+	"os"
 )
 
-func migrate() {
+var listener net.Listener
+
+func migrateDB() {
 	err := models.Migrate()
 	if err != nil {
-		log.Fatalf("failed to migrate db: %v", err)
+		log.Fatalf("failed to migrate db: %s", err.Error())
 	}
 }
 
-func serve() {
-	listener, err := net.Listen("tcp", ":8000")
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+func createListener() {
+	var err error
+	if listener, err = net.Listen("tcp", fmt.Sprintf(":%s", os.Getenv("LISTEN_PORT"))); err != nil {
+		log.Fatalf("failed to create TCP listener: %s", err.Error())
 	}
-
-	grpcServer := grpc.NewServer()
-	pb.RegisterUserServer(grpcServer, new(server.UserServer))
-
-	fmt.Println("gRPC server is started.")
-	err = grpcServer.Serve(listener)
-	if err != nil {
-		log.Fatalf("failed to serve: %v", err)
-	}
-}
-
-func main() {
-	serve()
 }
 
 func init() {
-	migrate()
+	migrateDB()
+	createListener()
+}
+
+func main() {
+	grpcServer := grpc.NewServer()
+	pb.RegisterUserServer(grpcServer, new(server.UserServer))
+
+	fmt.Println("gRPC server listening ...")
+	if err := grpcServer.Serve(listener); err != nil {
+		log.Fatalf("failed to serve: %s", err.Error())
+	}
 }
